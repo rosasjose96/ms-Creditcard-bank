@@ -96,7 +96,17 @@ public class CreditCardHandler {
                     creditCard.setCustomer(CustomerDTO.builder().name(customer.getName())
                             .code(customer.getCustomerType().getCode())
                             .customerIdentityNumber(customer.getCustomerIdentityNumber()).build());
-                    return service.create(creditCard);
+                    return service.validateCustomerIdentityNumber(customer.getCustomerIdentityNumber())
+                            .flatMap(creditcardFound -> {
+                                if(creditcardFound.getPan() != null){
+                                    LOGGER.info("La tarjeta de crédito encontrada es: "
+                                            + creditcardFound.getPan());
+                                    return Mono.empty();
+                                }else {
+                                    LOGGER.info("No se encontró la cuenta ");
+                                    return service.create(creditCard);
+                                }
+                            });
                 })
                 ).flatMap( c -> ServerResponse
                 .ok()

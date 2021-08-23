@@ -144,6 +144,13 @@ public class CreditCardServiceImpl implements ICreditCardService {
     }
 
     @Override
+    public Mono<CreditCard> validateCustomerIdentityNumber(String customerIdentityNumber) {
+        return repository.findByCustomer_CustomerIdentityNumber(customerIdentityNumber)
+                .switchIfEmpty(Mono.just(CreditCard.builder()
+                        .pan(null).build()));
+    }
+
+    @Override
     public Mono<CreditCard> findByCustomerIdentityNumber(String customerIdentityNumber) {
         return repository.findByCustomer_CustomerIdentityNumber(customerIdentityNumber);
     }

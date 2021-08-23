@@ -35,5 +35,13 @@ public interface ICreditCardService extends ICRUDService<CreditCard,String> {
      */
     public Mono<CustomerDTO> newPan(String id, CustomerDTO customerDTO);
 
+    /**
+     * Validate customer identity number mono.
+     *
+     * @param customerIdentityNumber the customer identity number
+     * @return the mono
+     */
+    Mono<CreditCard> validateCustomerIdentityNumber(String customerIdentityNumber);
+
     public Mono<CreditCard> findByCustomerIdentityNumber(String customerIdentityNumber);
 }

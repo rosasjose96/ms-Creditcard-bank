@@ -59,8 +59,6 @@ public class CreditCard {
     @NotNull
     private String chargeDay;
 
-
     @NotNull
-    @Indexed(unique=true)
     private CustomerDTO customer;
 }
